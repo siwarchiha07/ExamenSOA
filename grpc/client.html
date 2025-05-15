@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Cosmetic Client</title>
+</head>
+<body>
+  <h1>Test Produit Cosmétique</h1>
+  <input id="productId" placeholder="Entrez ID produit" />
+  <button onclick="getProduct()">Obtenir Produit</button>
+  <button onclick="getHistory()">Historique</button>
+  <pre id="output"></pre>
+
+  <script>
+    const socket = new WebSocket("ws://localhost:8080");
+    const output = document.getElementById("output");
+
+    socket.onmessage = (event) => {
+      const msg = JSON.parse(event.data);
+      output.textContent += JSON.stringify(msg, null, 2) + '\n';
+    };
+
+    function getProduct() {
+      const id = document.getElementById("productId").value;
+      socket.send(JSON.stringify({ type: "getProduct", product_id: id }));
+    }
+
+    function getHistory() {
+      socket.send(JSON.stringify({ type: "getHistory" }));
+    }
+  </script>
+</body>
+</html>

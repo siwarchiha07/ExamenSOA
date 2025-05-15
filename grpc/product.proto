@@ -1,0 +1,34 @@
+syntax = "proto3";
+package cosmetic;
+
+// Message représentant un produit cosmétique
+message Product {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  float price = 4;
+}
+
+// Requête pour obtenir un produit par ID
+message GetProductRequest {
+  string product_id = 1;
+}
+
+// Réponse avec les détails du produit
+message GetProductResponse {
+  Product product = 1;
+}
+
+// Requête pour obtenir l'historique des produits consultés
+message GetProductHistoryRequest {}
+
+// Réponse avec la liste des produits consultés
+message GetProductHistoryResponse {
+  repeated Product products = 1;
+}
+
+// Service gRPC
+service ProductService {
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+  rpc GetProductHistory(GetProductHistoryRequest) returns (GetProductHistoryResponse);
+}

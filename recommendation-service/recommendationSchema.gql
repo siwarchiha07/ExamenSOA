@@ -1,0 +1,11 @@
+type Product {
+  id: ID!
+  name: String!
+  description: String!
+  category: String!
+  price: Float!
+}
+
+type Query {
+  recommendations(category: String): [Product]
+}
